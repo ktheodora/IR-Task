@@ -33,7 +33,7 @@ public class Main {
 		String pathDocs = args[0];
 		String pathIndex = args[1];
 		String rankingModel = args[2];
-		boolean modeVS = true;
+		boolean modeVS = true;//creating a bool for the ranking model which is easier to manipulate
 		if(rankingModel.toUpperCase().equals("VS")) {
 			modeVS = true;
 			
@@ -72,9 +72,9 @@ public class Main {
 		      long startTime = System.currentTimeMillis();
 
 		    
-		      
+		      //commencing the process of query search by creating a searcher object
 		      Searcher search = new Searcher(pathIndex);
-		      
+		      //choosing raking model - vector space or okapi bm25
 		      search.setSimilarity(modeVS ? new ClassicSimilarity() :  new BM25Similarity());
 		      
 		      
@@ -90,7 +90,7 @@ public class Main {
 		      System.out.println();
 		      System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
 		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
-		    	  
+		    	  //printing relevant documents based on the ranking model the user chose 
 		         Document doc = search.getDocument(scoreDoc);
 		         System.out.printf("%5d %20f %40s %50s",
 		                 i++, scoreDoc.score, doc.get("title"), doc.get("path"));
